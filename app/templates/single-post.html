@@ -1,0 +1,57 @@
+{% extends './partials/layout.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="list-group col-1">
+            <a href="{{ url_for('main.home') }}"
+                class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">POSTS</a>
+            <a href="{{ url_for('main.learn') }}"
+                class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">PRACTICE</a>
+            <a href="{{ url_for('main.translate_lang') }}"
+                class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">TRANSLATE</a>
+        </div>
+
+        <div class="col">
+            <div class="list-group col p-5">
+                <div class="mb-5">
+                    <p><a href="{{ url_for('main.user', id=user['id']) }}" class="text-primary mb-2 mt-5 fs-3 text-decoration-none">{{ user['username'].title() }} Asked:</a>                        <div class="card">
+                        <div class="card-header pt-3 pb-2 text-secondary fs-5">
+                            <p>{{ post['title'] }}</p>
+                        </div>
+                        <div class="card-body pt-3 pb-2 text-secondary fs-5">
+                            <p>{{ post['body'] }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Viewing Comments -->
+                <h4 class="text-secondary mb-2 mt-5 fs-4 text-decoration-none">Comments:</h4>
+                {% for comment in comments|reverse if comment['post_id'] == post.id %}
+                {% for user in users if comment.user_id == user.id %}
+                <p><a href="{{ url_for('main.user', id=user['id']) }}" class="text-primary mb-2 mt-5 fs-4 text-decoration-none">{{ user.username }} commented:</a></p>
+                <div class="card mb-2">
+                    <div class="card-header">
+                    <p class="mb-2 text-secondary text-decoration-none">{{ comment['body'] }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+
+                <!-- Creating Comments -->
+                <form action="{{ url_for('main.post', id=post.id) }}" method="POST">
+                    <div class="form-group mt-4">
+                        <h3 class="text-primary">Answer Post</h3>
+                        <label class="text-dark" for="comment">Comment:</label>
+                        <input type="comment" class="form-control" style="height: 50px;" id="comment" name="comment"
+                        placeholder="">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Submit Answer</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    {% endblock content %}

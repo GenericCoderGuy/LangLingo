@@ -1,0 +1,30 @@
+{% extends './partials/landing.html' %}
+
+{% block content %}
+<form action="{{ url_for('auth.login') }}" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="container-fluid d-flex flex-column align-items-center justify-content-center">
+        <div class="row mt-5">
+            <div class="col mx-5">
+                <img src="{{ url_for('static',filename ='languagesold.png') }}" class="d-flex align-items-center"
+                    alt="Responsive image">
+            </div>
+
+            <div class="col mt-5">
+                <div class="form-group text-center mb-5">
+                    <h2>A fun way to learn a new language!</h2>
+                </div>
+                <div class="form-group">
+                    <a href="{{ url_for('auth.register') }}"
+                        class="btn bg-success p-2 text-light box rounded-pill d-flex justify-content-center mx-5 mb-3 p-3 cbutton fw-bold" style="background-color: #39a408!important;">GET STARTED</a>
+                </div>
+                <div class="form-group flex-column align-">
+                    <a href="{{ url_for('auth.login') }}"
+                        class="btn bg-dark p-2 text-light box border border-dark rounded-pill d-flex justify-content-center mx-5 p-3 cbutton fw-bold" style="--bs-bg-opacity: .25;">I ALREADY HAVE AN ACCOUNT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+{% endblock content %}

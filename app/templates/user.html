@@ -1,0 +1,24 @@
+{% extends './partials/layout.html' %}
+
+{% block content %}
+<h2 class="mt-5 mb-2">Trainer: {{ user['username'].title() }}'s Pokemon Collection:</h2>
+{% if userid == None %}
+<p>Looks like there's no collections available. Start collecting Pokemon!</p>
+
+{% else %}
+{% for pokemon in pokemons if pokemon['user_id'] == user.id %}
+<div class="card mb-2">
+  <div class="card-header">
+    <b>{{ pokemon['name'] }}</b>
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{ pokemon['name'] }}: {{ pokemon['description'] }}</p>
+    <p class="card-text">Type: {{ pokemon['type'] }}</p>
+  </div>
+</div>
+{% else %}
+<p>Looks like there's no collections available. Start collecting Pokemon!</p>
+{% endfor %}
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends './partials/landing.html' %}
+
+{% block content %}
+<form action="{{ url_for('auth.register') }}" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="container-fluid d-flex flex-column">
+        <div class="row border p-5">
+
+            <div class="col m-5">
+                <h2 class="text-center">Register</h2>
+                <div class="form-group mb-3">
+                    <fieldset id="email-field">
+                        {{ form.email.label }}
+                        {{ form.email(class="form-control", placeholder = "Enter your Email here") }}
+                    </fieldset>
+
+                    <small id="emailHelp" class="form-text text-white">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group mb-3">
+                    <fieldset id="username-field">
+                        {{ form.username.label }}
+                        {{ form.username(class="form-control", placeholder = "Enter your Username") }}
+                    </fieldset>
+
+                </div>
+
+                <div class="form-group mb-3">
+                    <fieldset id="password-field">
+                        {{ form.password.label }}
+                        {{ form.password(class="form-control", placeholder = "Enter your Password") }}
+                    </fieldset>
+
+                </div>
+                <div class="form-group mb-3">
+
+                    <fieldset id="confirm_password-field">
+                        {{ form.confirm_password.label }}
+                        {{ form.confirm_password(class="form-control", placeholder = "Confirm your Password") }}
+                    </fieldset>
+
+                </div>
+                <p><small>Already have an account? <a href="{{ url_for('auth.login') }}" class="text-decoration-none text-white">Login here.</a></small></p>
+                <div class="form-group">
+                    <p>{{ form.submit_button(class = "btn btn-dark btn-block") }}</p>
+                </div>
+            </div>
+
+            <!-- <div class="col">
+                <image src="{{ url_for('static',filename ='ballmaster.png') }}" class="img-fluid" alt="Responsive image">
+            </div> -->
+    </div>
+</form>
+{% endblock content %}

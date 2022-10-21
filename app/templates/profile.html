@@ -1,0 +1,70 @@
+{% extends './partials/layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+      <div class="list-group col-1">
+        <a href="{{ url_for('main.home') }}" class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">POSTS</a>
+        <a href="{{ url_for('main.learn') }}" class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">PRACTICE</a>
+        <a href="{{ url_for('main.translate_lang') }}" class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">TRANSLATE</a>
+        <a href="{{ url_for('main.explore') }}"
+        class="list-group-item-action text-decoration-none text-secondary my-3 p-2">EXPLORE</a>
+      </div>
+
+        <form class="col" action="{{ url_for('main.home') }}" method="POST">
+            <div class="text-center">
+              <h2 class="mb-5 text-dark" style="color: #0853a4!important;">{{ current['username'].title() }}'s Profile</h2>
+      
+              <!-- Creating Posts -->
+              <h3 class="mb-5 text-secondary">Create Post</h3>
+              <form action="{{ url_for('main.create_post') }}" method="POST" class="my-2">
+                <div class="form-group">
+                  <label class="text-secondary" for="title">Question:</label>
+                  <input type="text" class="form-control" id="title" name="title" placeholder="What does - mean?">
+                </div>
+                <div class="form-group">
+                  <label class="text-secondary" for="body">Body:</label>
+                  <input type="text" class="form-control" id="body" name="body" placeholder="For instance:" style="height: 60px;">
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </div>
+
+              <!-- Viewing Posts -->
+              <div class="mb-5">
+                <h3 class="mb-2 text-secondary">Your Posts:</h3>
+                {% for post in posts|reverse if post['user_id'] == current['id'] %}
+                {% if loop.index <= 5 %}
+                <div class="card mb-2">
+                  <div class="card-header">
+                    <h4><a href="{{ url_for('main.post', id=post['id']) }}" class="text-decoration-none">{{ post['title'] }}</a></h4>
+                  </div>
+                  <h4 class="card-body text-secondary mb-1">{{ post['body'] }}</h4>
+                </div>
+                {% endif %}
+                {% else %}
+                <p class="mb-2 text-secondary">This user has no posts.</p>
+                {% endfor %}
+              </div>
+
+              <h3 class="mb-2 text-secondary">Your Latest Translations:</h3>
+              {% for phrase in phrases|reverse if phrase['user_id'] == current['id'] %}
+              {% if loop.index <= 5 %}
+              <div class="card mb-2">
+                <h4 class="text-secondary ml-5">Translate from {{ phrase['languageOriginal'] }} to {{ phrase['languageTranslated'] }}</h4>
+                <div class="card-header">
+                  <label style="color:rgb(60, 89, 206)" for="exampleFormControlTextarea1">Original Text</label>
+                  <h4 class="text-secondary">{{ phrase['textOriginal'] }}</h4>
+                  <label style="color:rgb(60, 89, 206)" for="exampleFormControlTextarea1">Translated Text</label>
+                  <h4 class="text-secondary">{{ phrase['textTranslated'] }}</h4>
+                </div>
+              </div>
+              {% endif %}
+              {% else %}
+              <p class="mb-2 text-secondary">This user has no translations.</p>
+              {% endfor %}
+            </form>
+          </form>
+    </div>
+</div>
+
+{% endblock content %}

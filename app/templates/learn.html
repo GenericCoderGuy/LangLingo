@@ -1,0 +1,43 @@
+{% extends './partials/layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="list-group col-1">
+      <a href="{{ url_for('main.home') }}" class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">POSTS</a>
+      <a href="{{ url_for('main.learn') }}" class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3 active border border-info" style="color: #0c477e!important; background-color: #abd3f8!important;" aria-current="true">PRACTICE</a>
+      <a href="{{ url_for('main.translate_lang') }}" class="list-group-item-action text-decoration-none text-secondary my-3 p-2 rounded-3">TRANSLATE</a>
+      <a href="{{ url_for('main.explore') }}"
+      class="list-group-item-action text-decoration-none text-secondary my-3 p-2">EXPLORE</a>
+    </div>
+
+    <form class="col text-center mt-5 d-flex justify-content-center" action="{{ url_for('main.learn') }}" method="POST">
+
+      <div class="row">
+        <div>
+          <h2 class="text-secondary col">What is 'Hello' in Spanish?</h2>
+        </div>
+        <div class="form-group col">
+          <label class="text-dark" for="body">Answer:</label>
+          <input type="text" class="form-control" id="body" name="body"
+            placeholder="Answer here:">
+        </div>
+      </div>
+
+    </form>
+
+
+  </div>  
+</div>
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+{% endblock content %}

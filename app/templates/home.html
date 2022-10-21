@@ -1,0 +1,60 @@
+{% extends './partials/layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="list-group col-1">
+      <a href="{{ url_for('main.home') }}"
+        class="list-group-item-action text-decoration-none text-secondary my-3 p-2 active border border-info"
+        style="color: #0c477e!important; background-color: #abd3f8!important;" aria-current="true">POSTS</a>
+      <a href="{{ url_for('main.learn') }}"
+        class="list-group-item-action text-decoration-none text-secondary my-3 p-2">PRACTICE</a>
+      <a href="{{ url_for('main.translate_lang') }}"
+        class="list-group-item-action text-decoration-none text-secondary my-3 p-2">TRANSLATE</a>
+      <a href="{{ url_for('main.explore') }}"
+        class="list-group-item-action text-decoration-none text-secondary my-3 p-2">EXPLORE</a>
+    </div>
+
+    <form class="col" action="{{ url_for('main.home') }}" method="POST">
+      <div class="p-5">
+        <!-- <h2 class="mb-5 text-light border border-color-light rounded-pill py-2" style="background-color: #39a408!important;" >Welcome {{ current['username'].title() }}.</h2> -->
+
+        <!-- Creating Posts -->
+        <h2 class="mb-5 text-primary">Create a Post</h2>
+        <form action="{{ url_for('main.create_post') }}" method="POST">
+          <div class="form-group">
+            <label class="text-dark" for="title">Question:</label>
+            <input type="text" class="form-control" style="width: 800px; height: 25px;" id="title" name="title"
+              placeholder="What does - mean?">
+          </div>
+          <div class="form-group mt-4">
+            <label class="text-dark" for="body">Body:</label>
+            <input type="text" class="form-control" style="width: 800px; height: 60px;" id="body" name="body"
+              placeholder="">
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+      </div>
+
+      <h2 class="text-success" style="color: #39a408!important;">Latest Questions:</h2>
+      <!-- Viewing Posts -->
+      {% for user in users %}
+      {% if loop.index <= 5 %}
+      <p class="mt-4"><a href="{{ url_for('main.user', id=user['id']) }}" class="text-primary mb-2 mt-5 text-decoration-none" >{{ user['username'].title() }}:</a>
+        {% for post in posts|reverse if post['user_id'] == user.id %}
+        <div class="card mb-2">
+          <div class="card-header">
+            <h4><a href="{{ url_for('main.post', id=post['id']) }}" class="text-decoration-none">{{ post['title'] }}</a></h4>
+          </div>
+          <h4 class="card-body text-secondary mb-2">{{ post['body'] }}</h4>
+        </div>
+        {% else %}
+        <p class="mb-4 text-secondary">This user has no posts.</p>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+    </form>
+
+  </div>
+</div>
+{% endblock content %}
